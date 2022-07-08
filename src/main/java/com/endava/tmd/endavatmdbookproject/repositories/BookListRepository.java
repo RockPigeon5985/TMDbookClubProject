@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface BookListRepository extends JpaRepository<BookList, BookListID> {
     public List<BookList> getBookListByRentidIsNull();
-    public BookList getBookListByBookListID(BookListID bookListID);
 
 }

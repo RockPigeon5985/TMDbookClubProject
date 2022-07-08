@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookListService {
@@ -22,6 +24,13 @@ public class BookListService {
         return bookListRepository.findAll();
     }
 
+    public List<BookList> getByUserId(Long userid){
+        return bookListRepository
+                .findAll()
+                .stream()
+                .filter(t -> t.getBookListID().getUser().getUser_id() == userid)
+                .collect(Collectors.toList());
+    }
     public BookList add(Long userid, Book book){
         BookList bookList = new BookList();
         BookListID bookListID = new BookListID();
@@ -55,13 +64,12 @@ public class BookListService {
         bookListRepository.saveAndFlush(bookList);
     }
     public List<RentList> verifyRent(Long userId){
-        List<BookList> bookList = bookListRepository.getBookListByRentidIsNull();
+        List<BookList> bookList = getByUserId(userId);
         List<RentList> result = new ArrayList<RentList>();
         for(BookList b : bookList){
-            if(b.getRentid() == null){
-                continue;
+            if(b.getRentid() != null){
+                result.add(b.getRentid());
             }
-            result.add(b.getRentid());
         }
         return result;
     }
