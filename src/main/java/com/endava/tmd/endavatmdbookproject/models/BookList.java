@@ -1,15 +1,16 @@
 package com.endava.tmd.endavatmdbookproject.models;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
 
 @Entity(name = "book_list")
 public class BookList {
     @Id
     private BookListID bookListID;
+    @OneToOne
+    @JoinColumn(name = "rent_id")
+    private RentList rentid;
 
-    @Column(name = "rent_id")
-    private Long rentid;
     public BookList() {
     }
 
@@ -21,11 +22,11 @@ public class BookList {
         this.bookListID = bookListID;
     }
 
-    public Long getRentid() {
+    public RentList getRentid() {
         return rentid;
     }
 
-    public void setRentid(Long rentid) {
+    public void setRentid(RentList rentid) {
         this.rentid = rentid;
     }
 }

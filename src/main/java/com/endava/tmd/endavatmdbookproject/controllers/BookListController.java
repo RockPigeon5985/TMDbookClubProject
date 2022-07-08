@@ -2,6 +2,7 @@ package com.endava.tmd.endavatmdbookproject.controllers;
 
 import com.endava.tmd.endavatmdbookproject.models.Book;
 import com.endava.tmd.endavatmdbookproject.models.BookList;
+import com.endava.tmd.endavatmdbookproject.models.RentList;
 import com.endava.tmd.endavatmdbookproject.services.BookListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,12 @@ public class BookListController {
             method = RequestMethod.GET)
     public List<BookList> getBookListByRentidIsNull(){
         return bookListService.getBookListByRentidIsNull();
+    }
+
+    @RequestMapping(path = "/verifyRent",
+            params = "id",
+            method = RequestMethod.GET)
+    public List<RentList> verifyRent(@RequestParam Long id){
+        return bookListService.verifyRent(id);
     }
 }

@@ -1,18 +1,16 @@
 package com.endava.tmd.endavatmdbookproject.services;
 
-import com.endava.tmd.endavatmdbookproject.models.Book;
-import com.endava.tmd.endavatmdbookproject.models.BookList;
-import com.endava.tmd.endavatmdbookproject.models.BookListID;
-import com.endava.tmd.endavatmdbookproject.models.User;
+import com.endava.tmd.endavatmdbookproject.models.*;
 import com.endava.tmd.endavatmdbookproject.repositories.BookListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BookListService implements Serializable {
+public class BookListService {
     @Autowired
     private BookListRepository bookListRepository;
     @Autowired
@@ -50,5 +48,21 @@ public class BookListService implements Serializable {
 
     public List<BookList> getBookListByRentidIsNull(){
         return bookListRepository.getBookListByRentidIsNull();
+    }
+
+    public void updateRentid(BookList bookList, RentList rentid){
+        bookList.setRentid(rentid);
+        bookListRepository.saveAndFlush(bookList);
+    }
+    public List<RentList> verifyRent(Long userId){
+        List<BookList> bookList = bookListRepository.getBookListByRentidIsNull();
+        List<RentList> result = new ArrayList<RentList>();
+        for(BookList b : bookList){
+            if(b.getRentid() == null){
+                continue;
+            }
+            result.add(b.getRentid());
+        }
+        return result;
     }
 }

@@ -18,10 +18,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-/*    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private BookList bookList;*/
-
     public User() {
     }
 
@@ -63,5 +59,12 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return  "first_name = " + first_name +
+                ", last_name = " + last_name +
+                ", email = " + email;
     }
 }

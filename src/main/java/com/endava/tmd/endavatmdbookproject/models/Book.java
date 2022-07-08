@@ -15,9 +15,6 @@ public class Book {
     @Column(nullable = false)
     private Integer year;
 
-   /* @OneToMany(mappedBy = "book")
-    private List<BookList> bookList;*/
-
     public Book() {
     }
 
@@ -51,5 +48,12 @@ public class Book {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return "title = " + title +
+                "author = " + author +
+                "year = " + year;
     }
 }
