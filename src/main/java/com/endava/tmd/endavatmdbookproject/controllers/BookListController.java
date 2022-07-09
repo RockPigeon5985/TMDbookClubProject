@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/booklist")
@@ -44,5 +45,17 @@ public class BookListController {
             method = RequestMethod.GET)
     public List<RentList> verifyRent(@RequestParam Long id){
         return bookListService.verifyRent(id);
+    }
+
+    @RequestMapping(path = "/search",
+            method = RequestMethod.GET)
+    public Object search(@RequestParam("title") Optional<String> title, @RequestParam("author") Optional<String> author){
+        List<String> result = bookListService.search(title,author);
+
+        if(result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return result;
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,17 @@ public class BookListService {
 
     public List<BookList> list(){
         return bookListRepository.findAll();
+    }
+
+    public List<BookList> getBookListByTitleOrAuthor(String title, String author){
+        Predicate<BookList> getByTitle = t -> t.getBookListID().getBook().getTitle().equals(title);
+        Predicate<BookList> getByAuthor = t -> t.getBookListID().getBook().getAuthor().equals(author);
+
+        return bookListRepository
+                .findAll()
+                .stream()
+                .filter(getByTitle.or(getByAuthor))
+                .collect(Collectors.toList());
     }
 
     public List<BookList> getByUserId(Long userid){
@@ -72,5 +85,20 @@ public class BookListService {
             }
         }
         return result;
+    }
+
+    public List<String> search(Optional<String> title, Optional<String> author){
+        List<BookList> result = getBookListByTitleOrAuthor(title.orElse(""),author.orElse(""));
+        return result
+                .stream()
+                .map(t -> {
+                    if(t.getRentid() == null){
+                        return "Available for rent";
+                    }
+
+                    return "Date_of_rent = " + t.getRentid().getDate_of_rent() +
+                        ", period = " + t.getRentid().getPeriod();
+                })
+                .collect(Collectors.toList());
     }
 }

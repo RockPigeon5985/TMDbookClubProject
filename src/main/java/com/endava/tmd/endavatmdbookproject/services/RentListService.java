@@ -22,7 +22,8 @@ public class RentListService {
         return rentListRepository.findAll();
     }
 
-    public RentList rent(Long userid, String title, String author, String period){
+    public RentList rent(Long userid, String title,
+                         String author, String period){
         RentList newRentList = new RentList();
 
         if(userService.get(userid) == null){
