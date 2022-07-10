@@ -29,8 +29,21 @@ public class RentListController {
                        @RequestParam("author") String author, @RequestParam("period") String period){
         Object r = rentListService.rent(userid, title, author, period);
         if(r == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return r;
+    }
+
+    @RequestMapping(path = "/extend",
+    method = RequestMethod.GET)
+    public Object extendRent(@RequestParam("userid") Long userid, @RequestParam("period") Integer period,
+                             @RequestParam("title") String title){
+        RentList rentList = rentListService.extendRent(userid, period, title);
+
+        if(rentList == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return rentList;
     }
 }
