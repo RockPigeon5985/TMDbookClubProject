@@ -24,14 +24,14 @@ public class BookListController {
     }
 
     @RequestMapping(path = "/add",
-            params = "userid",
             method = RequestMethod.POST)
-    public Object add(@RequestParam Long userid ,@RequestBody Book book){
+    public Object add(@RequestParam("userid") Long userid ,@RequestBody Book book){
         Object bookList = bookListService.add(userid, book);
-         if(bookList == null){
+
+        if(bookList == null){
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-         }
-         return bookList;
+        }
+        return bookList;
     }
 
     @RequestMapping(path = "/rent",
@@ -47,9 +47,8 @@ public class BookListController {
     }
 
     @RequestMapping(path = "/verifyRent",
-            params = "id",
             method = RequestMethod.GET)
-    public List<RentList> verifyRent(@RequestParam Long id){
+    public List<RentList> verifyRent(@RequestParam("id") Long id){
         return bookListService.verifyRent(id);
     }
 

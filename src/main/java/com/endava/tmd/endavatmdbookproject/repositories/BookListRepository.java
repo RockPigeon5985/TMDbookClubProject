@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface BookListRepository extends JpaRepository<BookList, BookListID> {
-    public List<BookList> getBookListByRentidIsNull();
+    List<BookList> getBookListByRentidIsNull();
 }

@@ -24,9 +24,8 @@ public class UserController {
     }
 
     @RequestMapping(path = "/get",
-            params = "id",
             method = RequestMethod.GET)
-    public Object get(@RequestParam Long id){
+    public Object get(@RequestParam("id") Long id){
         if(userService.get(id) == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -44,9 +43,8 @@ public class UserController {
     }
 
     @RequestMapping(path ="/delete",
-            params = "id",
             method = RequestMethod.DELETE)
-    public Object delete(@RequestParam Long id){
+    public Object delete(@RequestParam("id") Long id){
         if(!userService.deleteById(id)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -54,9 +52,8 @@ public class UserController {
     }
 
     @RequestMapping(path = "/get/email",
-    params = "email",
     method = RequestMethod.GET)
-    public Object getUserByEmail(@RequestParam String email){
+    public Object getUserByEmail(@RequestParam("email") String email){
         if(userService.getUserByEmail(email) == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

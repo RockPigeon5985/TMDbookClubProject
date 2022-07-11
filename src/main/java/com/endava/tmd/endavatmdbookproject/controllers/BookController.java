@@ -1,9 +1,7 @@
 package com.endava.tmd.endavatmdbookproject.controllers;
 
 import com.endava.tmd.endavatmdbookproject.models.Book;
-import com.endava.tmd.endavatmdbookproject.repositories.BookRepository;
 import com.endava.tmd.endavatmdbookproject.services.BookService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +21,8 @@ public class BookController {
     }
 
     @RequestMapping(path = "/get",
-            params = "id",
             method = RequestMethod.GET)
-    public Book get(@RequestParam Long id){
+    public Book get(@RequestParam("id") Long id){
         return bookService.get(id);
     }
 
@@ -47,15 +44,4 @@ public class BookController {
         }
         return bookService.getBookByTitleAndAuthor(title,author);
     }
-/*    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long id){
-        bookRepository.deleteById(id);
-    }
-
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Book update(@PathVariable Long id, @RequestBody Book book){
-        Book existingBook = bookRepository.getReferenceById(id);
-        BeanUtils.copyProperties(book, existingBook, "book_id");
-        return bookRepository.saveAndFlush(existingBook);
-    }*/
 }

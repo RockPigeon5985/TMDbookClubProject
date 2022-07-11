@@ -5,8 +5,6 @@ import com.endava.tmd.endavatmdbookproject.repositories.BookListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
