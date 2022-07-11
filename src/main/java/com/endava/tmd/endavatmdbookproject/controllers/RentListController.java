@@ -26,7 +26,7 @@ public class RentListController {
     @RequestMapping(path = "/rent",
     method = RequestMethod.POST)
     public Object rent(@RequestParam("userid") Long userid, @RequestParam("title") String title,
-                       @RequestParam("author") String author, @RequestParam("period") String period){
+                       @RequestParam("author") String author, @RequestParam("period") Integer period){
         Object r = rentListService.rent(userid, title, author, period);
         if(r == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -35,7 +35,7 @@ public class RentListController {
     }
 
     @RequestMapping(path = "/extend",
-    method = RequestMethod.GET)
+    method = RequestMethod.POST)
     public Object extendRent(@RequestParam("userid") Long userid, @RequestParam("period") Integer period,
                              @RequestParam("title") String title){
         RentList rentList = rentListService.extendRent(userid, period, title);

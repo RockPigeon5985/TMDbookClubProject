@@ -68,8 +68,25 @@ public class BookListService {
         return bookListRepository.saveAndFlush(bookList);
     }
 
-    public List<BookList> getBookListByRentidIsNull(){
+    public List<String> getBooksForRent(){
+        List<BookList> bookList = bookListRepository.getBookListByRentidIsNull();
+        List<String> result = new ArrayList<>();
+
+        if(bookList.isEmpty()){
+            return null;
+        }
+
+        for(BookList b : bookList){
+            result.add(b.getBookListID().getBook().getTitle() + ", " +
+                    b.getBookListID().getBook().getAuthor() + ", " +
+                    b.getBookListID().getBook().getYear());
+        }
+
+        return result;
+    }
+    public List<BookList> getAvailableForRent(){
         return bookListRepository.getBookListByRentidIsNull();
+
     }
 
     public void updateRentid(BookList bookList, RentList rentid){

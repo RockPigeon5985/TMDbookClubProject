@@ -43,14 +43,14 @@ public class RentListService {
                 .collect(Collectors.toList());
     }
     public RentList rent(Long userid, String title,
-                         String author, String period){
+                         String author, Integer period){
         RentList newRentList = new RentList();
 
         if(userService.get(userid) == null){
             return null;
         }
 
-        List<BookList> availableForRent = bookListService.getBookListByRentidIsNull();
+        List<BookList> availableForRent = bookListService.getAvailableForRent();
 
         Optional<BookList> isAvailable = availableForRent
                 .stream()
@@ -62,7 +62,12 @@ public class RentListService {
         if(isAvailable.isPresent()){
             newRentList.setUser(userService.get(userid));
             newRentList.setBook(isAvailable.get().getBookListID().getBook());
-            newRentList.setPeriod(period);
+
+            if(period == 1) {
+                newRentList.setPeriod(period + " week");
+            }else{
+                newRentList.setPeriod(period + " weeks");
+            }
 
             long millis = System.currentTimeMillis();
             Date date = new Date(millis);
@@ -90,6 +95,7 @@ public class RentListService {
         Integer newPeriod = Integer.parseInt(rentList.get().getPeriod().split(" ")[0]) + period;
         rentList.get().setPeriod(newPeriod + " weeks");
 
+        rentListRepository.saveAndFlush(rentList.get());
         return rentList.get();
     }
 

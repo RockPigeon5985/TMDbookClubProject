@@ -36,8 +36,14 @@ public class BookListController {
 
     @RequestMapping(path = "/rent",
             method = RequestMethod.GET)
-    public List<BookList> getBookListByRentidIsNull(){
-        return bookListService.getBookListByRentidIsNull();
+    public Object getBooksForRent(){
+        List<String> result = bookListService.getBooksForRent();
+
+        if(result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return result;
     }
 
     @RequestMapping(path = "/verifyRent",
