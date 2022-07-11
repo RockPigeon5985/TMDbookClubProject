@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -34,7 +35,13 @@ public class RentListService {
                 .filter(getByUserID.and(getByBookTitle))
                 .findAny();
     }
-
+    public List<RentList> getByUserID(Long userid){
+        return rentListRepository
+                .findAll()
+                .stream()
+                .filter(t -> t.getUser().getUser_id() == userid)
+                .collect(Collectors.toList());
+    }
     public RentList rent(Long userid, String title,
                          String author, String period){
         RentList newRentList = new RentList();
@@ -84,5 +91,20 @@ public class RentListService {
         rentList.get().setPeriod(newPeriod + " weeks");
 
         return rentList.get();
+    }
+
+    public List<String> returnBook(Long userid){
+        if(userService.get(userid) == null){
+            return null;
+        }
+
+        List<String> result = new ArrayList<>();
+        List<RentList> rentList = getByUserID(userid);
+
+        for(RentList r : rentList){
+            result.add(r.getBook().getTitle() + ", " + r.getBook().getAuthor() + ", " + r.getDate_of_rent() + ", " + r.getPeriod());
+        }
+
+        return result;
     }
 }

@@ -46,4 +46,16 @@ public class RentListController {
 
         return rentList;
     }
+
+    @RequestMapping(path = "/return",
+    method = RequestMethod.GET)
+    public Object returnBook(@RequestParam("userid") Long userid){
+        List<String> result = rentListService.returnBook(userid);
+
+        if(result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return result;
+    }
 }
