@@ -7,8 +7,8 @@ import java.sql.Date;
 public class RentList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true)
-    private Long rent_id;
+    @Column(unique = true, name = "rent_id")
+    private Long rentid;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -27,12 +27,12 @@ public class RentList {
     public RentList() {
     }
 
-    public Long getRent_id() {
-        return rent_id;
+    public Long getRentid() {
+        return rentid;
     }
 
-    public void setRent_id(Long rent_id) {
-        this.rent_id = rent_id;
+    public void setRentid(Long rentid) {
+        this.rentid = rentid;
     }
 
     public String getPeriod() {

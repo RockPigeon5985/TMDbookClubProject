@@ -1,10 +1,7 @@
 package com.endava.tmd.endavatmdbookproject.controllers;
 
-import com.endava.tmd.endavatmdbookproject.models.Book;
 import com.endava.tmd.endavatmdbookproject.models.User;
-import com.endava.tmd.endavatmdbookproject.repositories.UserRepository;
 import com.endava.tmd.endavatmdbookproject.services.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +15,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    //get all users
     @RequestMapping(method = RequestMethod.GET)
     public List<User> list(){
         return userService.list();
     }
 
-    @RequestMapping(path = "/get",
-            method = RequestMethod.GET)
-    public Object get(@RequestParam("id") Long id){
-        if(userService.get(id) == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return userService.get(id);
-    }
-
+    //create an account
     @RequestMapping(path = "/create",
             method = RequestMethod.POST)
     public Object create(@RequestBody User user){
@@ -40,23 +30,5 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return userCreated;
-    }
-
-    @RequestMapping(path ="/delete",
-            method = RequestMethod.DELETE)
-    public Object delete(@RequestParam("id") Long id){
-        if(!userService.deleteById(id)){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(path = "/get/email",
-    method = RequestMethod.GET)
-    public Object getUserByEmail(@RequestParam("email") String email){
-        if(userService.getUserByEmail(email) == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return userService.getUserByEmail(email);
     }
 }

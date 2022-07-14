@@ -12,12 +12,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    //get all users
     public List<User> list(){
         return userRepository.findAll();
     }
-    public User get(Long id){
-        return userRepository.findById(id).orElse(null);
-    }
+
+
+    //create an account
     public User create(User user){
         try{
             return userRepository.saveAndFlush(user);
@@ -25,15 +26,14 @@ public class UserService {
             return null;
         }
     }
-    public boolean deleteById(Long id){
-        try{
-            userRepository.deleteById(id);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
 
+    //used by other services
+
+    //get user by user id
+    public User getUserByUserid(Long id){
+        return userRepository.getUserByUserid(id);
+    }
+    //get user by email
     public User getUserByEmail(String email){
         return userRepository.getUserByEmail(email);
     }

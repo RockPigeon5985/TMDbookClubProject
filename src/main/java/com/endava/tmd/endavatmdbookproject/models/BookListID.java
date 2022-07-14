@@ -1,9 +1,6 @@
 package com.endava.tmd.endavatmdbookproject.models;
 
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 @Embeddable
 public class BookListID implements Serializable {

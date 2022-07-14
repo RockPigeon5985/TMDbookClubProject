@@ -4,12 +4,8 @@ import com.endava.tmd.endavatmdbookproject.models.*;
 import com.endava.tmd.endavatmdbookproject.repositories.BookListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Service
 public class BookListService {
@@ -20,33 +16,18 @@ public class BookListService {
     @Autowired
     private BookService bookService;
 
+    //get all book lists
     public List<BookList> list(){
         return bookListRepository.findAll();
     }
 
-    public List<BookList> getBookListByTitleOrAuthor(String title, String author){
-        Predicate<BookList> getByTitle = t -> t.getBookListID().getBook().getTitle().equals(title);
-        Predicate<BookList> getByAuthor = t -> t.getBookListID().getBook().getAuthor().equals(author);
-
-        return bookListRepository
-                .findAll()
-                .stream()
-                .filter(getByTitle.or(getByAuthor))
-                .collect(Collectors.toList());
-    }
-
-    public List<BookList> getByUserId(Long userid){
-        return bookListRepository
-                .findAll()
-                .stream()
-                .filter(t -> t.getBookListID().getUser().getUser_id() == userid)
-                .collect(Collectors.toList());
-    }
+    //add a book in a user book list
     public BookList add(Long userid, Book book){
         BookList bookList = new BookList();
         BookListID bookListID = new BookListID();
 
-        User findUser = userService.get(userid);
+        User findUser = userService.getUserByUserid(userid);
+
         if(findUser == null){
             return null;
         }
@@ -54,6 +35,7 @@ public class BookListService {
         bookListID.setUser(findUser);
 
         Book findBook = bookService.getBookByTitleAndAuthor(book.getTitle(),book.getAuthor());
+
         if(findBook == null){
             bookService.create(book);
             bookListID.setBook(book);
@@ -63,57 +45,44 @@ public class BookListService {
 
         bookList.setBookListID(bookListID);
         bookList.setRentid(null);
+
         return bookListRepository.saveAndFlush(bookList);
     }
 
-    public List<String> getBooksForRent(){
+    //get all books available for rent
+    public List<Book> getBooksForRent(){
         List<BookList> bookList = bookListRepository.getBookListByRentidIsNull();
-        List<String> result = new ArrayList<>();
 
         if(bookList.isEmpty()){
             return null;
         }
 
+        List<Book> result = new ArrayList<>();
+
         for(BookList b : bookList){
-            result.add(b.getBookListID().getBook().getTitle() + ", " +
-                    b.getBookListID().getBook().getAuthor() + ", " +
-                    b.getBookListID().getBook().getYear());
+            result.add(b.getBookListID().getBook());
         }
 
         return result;
     }
-    public List<BookList> getAvailableForRent(){
-        return bookListRepository.getBookListByRentidIsNull();
 
+
+
+    //Used for other services
+
+    //get book if is available for rent
+    public BookList getIfAvailable(String title, String author){
+        return bookListRepository.getIfAvailable(title, author);
     }
 
+    //update rent status
     public void updateRentid(BookList bookList, RentList rentid){
         bookList.setRentid(rentid);
         bookListRepository.saveAndFlush(bookList);
     }
-    public List<RentList> verifyRent(Long userId){
-        List<BookList> bookList = getByUserId(userId);
-        List<RentList> result = new ArrayList<RentList>();
-        for(BookList b : bookList){
-            if(b.getRentid() != null){
-                result.add(b.getRentid());
-            }
-        }
-        return result;
-    }
 
-    public List<String> search(Optional<String> title, Optional<String> author){
-        List<BookList> result = getBookListByTitleOrAuthor(title.orElse(""),author.orElse(""));
-        return result
-                .stream()
-                .map(t -> {
-                    if(t.getRentid() == null){
-                        return "Available for rent";
-                    }
-
-                    return "Date_of_rent = " + t.getRentid().getDate_of_rent() +
-                        ", period = " + t.getRentid().getPeriod();
-                })
-                .collect(Collectors.toList());
+    //get book if available for rent
+    public BookList getBookAvailableForRent(String title, String author){
+        return bookListRepository.getBookListByBookListID_Book_TitleAndBookListID_Book_AuthorAndRentidIsNull(title, author);
     }
 }

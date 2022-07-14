@@ -13,22 +13,34 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    //get all books
     public List<Book> list(){
         return bookRepository.findAll();
     }
 
-    public Book get(Long id){
-        return bookRepository.findById(id).get();
+    //Used by other services
+
+    //get book by title and author
+    public Book getBookByTitleAndAuthor(String title, String author){
+        return bookRepository.getBookByTitleAndAuthor(title, author);
     }
 
+    //get book by title
+    public Book getBookByTitle(String title){
+        return bookRepository.getBookByTitle(title);
+    }
+
+    //get books by author
+    public List<Book> getBooksByAuthor(String author){
+        return bookRepository.getBooksByAuthor(author);
+    }
+
+    //create book if it doesn't exist
     public Book create(Book book){
         try{
             return bookRepository.saveAndFlush(book);
         }catch (Exception e){
             return null;
         }
-    }
-    public Book getBookByTitleAndAuthor(String title, String author){
-        return bookRepository.getBookByTitleAndAuthor(title, author);
     }
 }

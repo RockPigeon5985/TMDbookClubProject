@@ -1,13 +1,13 @@
 package com.endava.tmd.endavatmdbookproject.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long book_id;
+    @Column(name = "book_id")
+    private Long id;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
@@ -18,12 +18,12 @@ public class Book {
     public Book() {
     }
 
-    public Long getBook_id() {
-        return book_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setBook_id(Long book_id) {
-        this.book_id = book_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

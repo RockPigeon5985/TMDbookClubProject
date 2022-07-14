@@ -2,10 +2,9 @@ package com.endava.tmd.endavatmdbookproject.models;
 
 import javax.persistence.*;
 
-
 @Entity(name = "book_list")
 public class BookList {
-    @Id
+    @EmbeddedId
     private BookListID bookListID;
     @OneToOne
     @JoinColumn(name = "rent_id")
