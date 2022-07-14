@@ -14,8 +14,8 @@ public class WaitingList {
     private User user_id;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book_id;
+    @JoinColumn(name = "rent_id")
+    private RentList rent_id;
 
     @Column(nullable = false)
     private Date date_of_wait;
@@ -39,12 +39,12 @@ public class WaitingList {
         this.user_id = user_id;
     }
 
-    public Book getBook_id() {
-        return book_id;
+    public RentList getRent_id() {
+        return rent_id;
     }
 
-    public void setBook_id(Book book_id) {
-        this.book_id = book_id;
+    public void setRent_id(RentList rent_id) {
+        this.rent_id = rent_id;
     }
 
     public Date getDate_of_wait() {

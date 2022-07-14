@@ -123,10 +123,13 @@ public class RentListService {
         return rentListRepository
                 .getBorrowedBooks(userId)
                 .stream()
-                .map(t ->  rentListRepository.getRentListByRentid(t))
+                .map(t ->  getRentListByRentid(t))
                 .collect(Collectors.toList());
     }
 
     //used by other services
 
+    public RentList getRentListByRentid(Long rentid){
+        return rentListRepository.getRentListByRentid(rentid);
+    }
 }
