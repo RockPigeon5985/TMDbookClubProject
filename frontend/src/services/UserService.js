@@ -10,6 +10,10 @@ class UserService{
     create(){
         return axios.post(USERS_REST_API_URL + '/create');
     }
+
+    getUserByEmail(){
+        return axios.get(USERS_REST_API_URL + '/email')
+    }
 }
 
 export default new UserService()
