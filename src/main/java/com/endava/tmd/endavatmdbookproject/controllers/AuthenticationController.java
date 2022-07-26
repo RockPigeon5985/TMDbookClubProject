@@ -42,7 +42,7 @@ public class AuthenticationController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        User user = (User) authentication.getPrincipal();
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         String jwtToken = jwtTokenHelper.generateToken(user.getUsername());
 
         LoginResponse response = new LoginResponse();
