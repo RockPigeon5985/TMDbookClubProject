@@ -2,14 +2,10 @@ import React from 'react';
 
 const HeaderComponent = () => {
     return (
-        <div>
-            <header>
-                <nav className = "navbar navbar-expand-md navbar-dark bg-dark">
-                    <a className = "navbar-brand" >
-                        TMD BOOK CLUB
-                    </a>
-                </nav>
-            </header>
+        <div className="bg-gray-800">
+            <div className="h-16 px-8 flex items-center">
+                <p className="text-white font-bold">TMD Book Club</p>
+            </div>
         </div>
     )
 };
