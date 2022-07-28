@@ -3,15 +3,17 @@ package com.endava.tmd.endavatmdbookproject.models;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "users")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -29,44 +31,11 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @OneToOne
-    @JoinColumn(name = "auth_id")
-    private Authority authority;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<Authority> authority = new ArrayList<>();
-        authority.add(this.authority);
-        return authority;
-    }
+    @Column(name = "role")
+    private String role;
 
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return enabled;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return enabled;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return enabled;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
     }
 
     public void setPassword(String password) {
@@ -112,12 +81,16 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public Authority getAuthority() {
-        return authority;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setAuthority(Authority authority) {
-        this.authority = authority;
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.endava.tmd.endavatmdbookproject.config;
 
-import com.endava.tmd.endavatmdbookproject.services.UserService;
+import com.endava.tmd.endavatmdbookproject.services.UserDetailsServiceImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -12,13 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    private UserService userService;
-    private  JWTTokenHelper jwtTokenHelper;
+    private UserDetailsServiceImpl userDetailsService;
+    private final JWTTokenHelper jwtTokenHelper;
 
-    public JWTAuthenticationFilter(UserService userService, JWTTokenHelper jwtTokenHelper) {
-        this.userService = userService;
+    public JWTAuthenticationFilter(UserDetailsServiceImpl userDetailsService, JWTTokenHelper jwtTokenHelper) {
+        this.userDetailsService = userDetailsService;
         this.jwtTokenHelper = jwtTokenHelper;
     }
 
@@ -33,7 +35,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             String userName = jwtTokenHelper.getUsernameFromToken(authToken);
 
             if(userName != null){
-                UserDetails userDetails = userService.loadUserByUsername(userName);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
 
                 if(jwtTokenHelper.validateToken(authToken, userDetails)){
                     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
