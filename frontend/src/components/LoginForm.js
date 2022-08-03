@@ -1,26 +1,40 @@
 import React, {useState} from 'react';
-import UserService from "../services/UserService";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     let navigate = useNavigate();
-    const routeChange = () =>{
-        let path = `/register`;
-        navigate(path);
+
+    const handleRegisterNav = () => {
+        navigate(`/register`)
     }
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-
 
     const handleLogIn = () => {
-        UserService.getUserByEmail(email).then(response => {
-            console.log(response.data);
-        }).catch(error => {
-            console.log(error);
-            setError(error);
+        const reqBody = {
+            userName: email,
+            password: password
+        }
+
+        fetch("http://localhost:8080/auth/login", {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            method: "POST",
+            body: JSON.stringify(reqBody),
         })
+            .then(response => {
+                if(response.status === 200)
+                    return response.headers;
+                else
+                    return Promise.reject("Invalid credentials")})
+            .then(data => {
+                localStorage.setItem('token', data.get("authorization"));
+                navigate('/dashboard');
+            })
+            .catch(message => alert(message));
     }
 
     return (
@@ -64,7 +78,7 @@ const LoginForm = () => {
                         </button>
                         <button
                             className="rounded text-white font-semibold bg-red-400 hover:bg-red-700 py-2 px-6"
-                            onClick={routeChange}>
+                            onClick={handleRegisterNav}>
                             Register
                         </button>
                     </div>
@@ -74,42 +88,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-/*
-<div>
-    <br/><br/>
-    <div className="container">
-        <form>
-            <div className="form-inner">
-                <h2>Login</h2>
-                {(error !== "") ? (<div className="error">{error}</div>) : ""}
-                <div className="form-group">
-                    <label className="form-label">Email : </label>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Enter email"
-                        className="form-control"
-                        defaultValue={email}
-                        onChange={e => setUser({...user, email: e.target.value})}>
-                    </input>
-                </div>
-
-                <div className="form-group">
-                    <label className="form-label">Password : </label>
-                    <input
-                        type="text"
-                        name="password"
-                        placeholder="Enter password"
-                        className="form-control"
-                        defaultValue={password}
-                        onChange={e => setUser({...user, password: e.target.value})}>
-                    </input>
-                </div>
-                <button className="btn btn-success" onClick={e => getByEmail()}> LogIn</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-*/

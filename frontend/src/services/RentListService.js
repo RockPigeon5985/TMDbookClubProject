@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const RENTLIST_REST_API_URL = 'htpp://localhost:8080/rentlist';
+const RENTLIST_REST_API_URL = 'http://localhost:8080/rentlist';
 
 class RentListService{
     list(){

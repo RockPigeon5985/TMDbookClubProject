@@ -1,6 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 
 const HeaderComponent = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(!localStorage.getItem('token') && location.pathname !== '/login' &&
+            location.pathname !== '/register' && location.pathname !== '/'){
+            navigate('/login')
+        }
+    },[location] )
+
     return (
         <div className="bg-gray-800">
             <div className="h-16 px-8 flex items-center">

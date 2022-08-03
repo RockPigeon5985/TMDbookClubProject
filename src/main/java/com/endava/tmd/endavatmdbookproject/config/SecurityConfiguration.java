@@ -58,8 +58,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/**").permitAll()
+                //.antMatchers("/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()

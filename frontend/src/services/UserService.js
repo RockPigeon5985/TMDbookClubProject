@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USERS_REST_API_URL = 'htpp://localhost:8080/user';
+const USERS_REST_API_URL = 'http://localhost:8080/user';
 
 class UserService{
     list(){
@@ -11,8 +11,8 @@ class UserService{
         return axios.post(USERS_REST_API_URL + '/create');
     }
 
-    getUserByEmail(){
-        return axios.get(USERS_REST_API_URL + '/email')
+    getUserByEmail(email){
+        return axios.get(USERS_REST_API_URL + '/email', email)
     }
 }
 

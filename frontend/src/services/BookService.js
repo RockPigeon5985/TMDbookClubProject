@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BOOK_REST_API_URL = 'htpp://localhost:8080/book';
+const BOOK_REST_API_URL = 'http://localhost:8080/book';
 
 class BookService{
     list(){

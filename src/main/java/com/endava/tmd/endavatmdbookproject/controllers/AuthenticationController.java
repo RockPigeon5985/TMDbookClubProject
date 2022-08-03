@@ -3,21 +3,19 @@ package com.endava.tmd.endavatmdbookproject.controllers;
 import com.endava.tmd.endavatmdbookproject.config.JWTTokenHelper;
 import com.endava.tmd.endavatmdbookproject.models.User;
 import com.endava.tmd.endavatmdbookproject.request.AuthenticationRequest;
-import com.endava.tmd.endavatmdbookproject.response.LoginResponse;
 import com.endava.tmd.endavatmdbookproject.response.UserInfo;
 import com.endava.tmd.endavatmdbookproject.services.UserDetailsServiceImpl;
-import com.endava.tmd.endavatmdbookproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -30,12 +28,10 @@ public class AuthenticationController {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @RequestMapping(path = "/login",
             method = RequestMethod.POST)
-    public String login(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -43,9 +39,17 @@ public class AuthenticationController {
                             authenticationRequest.getPassword())
             );
         } catch (Exception ex) {
-            throw new Exception("inavalid username/password");
+           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return jwtTokenHelper.generateToken(authenticationRequest.getUserName());
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Expose-Headers", "*");
+        responseHeaders.set("Authorization",
+                jwtTokenHelper.generateToken(authenticationRequest.getUserName()));
+
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .build();
     }
 
     @RequestMapping(path = "/auth/userinfo",
