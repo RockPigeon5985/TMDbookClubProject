@@ -1,14 +1,14 @@
-import React from 'react';
-import {useNavigate} from "react-router-dom";
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const RegisterForm = () => {
-    let navigate = useNavigate();
-    const routeChange = () =>{
-        let path = `/`;
-        navigate(path);
-    }
+  const navigate = useNavigate()
+  const routeChange = () => {
+    const path = '/'
+    navigate(path)
+  }
 
-    return (
+  return (
         <div className="px-8 py-8">
             <div className=" flex max-w-2xl mx-auto shadow border-b">
                 <div className="px-8 py-8">
@@ -67,7 +67,7 @@ const RegisterForm = () => {
                 </div>
             </div>
         </div>
-    );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm

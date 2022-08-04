@@ -1,43 +1,41 @@
-import React, {useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
-    let navigate = useNavigate();
+  const navigate = useNavigate()
+  const handleRegisterNav = () => {
+    navigate('/register')
+  }
 
-    const handleRegisterNav = () => {
-        navigate(`/register`)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleLogIn = () => {
+    const reqBody = {
+      userName: email,
+      password
     }
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    fetch('http://localhost:8080/auth/login', {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(reqBody)
+    })
+      .then(response => {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        if (response.status === 200) { return response.headers } else { return Promise.reject('Invalid credentials') }
+      })
+      .then(data => {
+        localStorage.setItem('token', data.get('authorization'))
+        navigate('/dashboard')
+      })
+      .catch(message => alert(message))
+  }
 
-    const handleLogIn = () => {
-        const reqBody = {
-            userName: email,
-            password: password
-        }
-
-        fetch("http://localhost:8080/auth/login", {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            method: "POST",
-            body: JSON.stringify(reqBody),
-        })
-            .then(response => {
-                if(response.status === 200)
-                    return response.headers;
-                else
-                    return Promise.reject("Invalid credentials")})
-            .then(data => {
-                localStorage.setItem('token', data.get("authorization"));
-                navigate('/dashboard');
-            })
-            .catch(message => alert(message));
-    }
-
-    return (
+  return (
         <div className="px-8 py-8">
             <div className=" flex max-w-2xl mx-auto shadow border-b">
                 <div className="px-8 py-8">
@@ -84,7 +82,7 @@ const LoginForm = () => {
                     </div>
                 </div>
             </div>
-        </div>);
-};
+        </div>)
+}
 
-export default LoginForm;
+export default LoginForm

@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import React from 'react'
 
 const HeaderComponent = () => {
+/*
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -11,14 +11,15 @@ const HeaderComponent = () => {
             navigate('/login')
         }
     },[location] )
+*/
 
-    return (
+  return (
         <div className="bg-gray-800">
             <div className="h-16 px-8 flex items-center">
                 <p className="text-white font-bold">TMD Book Club</p>
             </div>
         </div>
-    )
-};
+  )
+}
 
-export default HeaderComponent;
+export default HeaderComponent
