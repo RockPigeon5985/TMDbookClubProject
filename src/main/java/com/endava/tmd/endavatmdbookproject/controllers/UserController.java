@@ -5,7 +5,6 @@ import com.endava.tmd.endavatmdbookproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +14,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     //get all users
     @RequestMapping(method = RequestMethod.GET)
@@ -29,7 +25,6 @@ public class UserController {
     @RequestMapping(path = "/create",
             method = RequestMethod.POST)
     public Object create(@RequestBody User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         Object userCreated = userService.create(user);
         if(userCreated == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
