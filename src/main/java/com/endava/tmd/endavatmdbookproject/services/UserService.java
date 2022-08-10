@@ -22,9 +22,13 @@ public class UserService{
         return userRepository.findAll();
     }
 
-
     //create an account
     public User create(User user){
+        if(user.getPassword().equals("") || user.getEmail().equals("") ||
+                user.getFirst_name().equals("") || user.getLast_name().equals("")){
+            return null;
+        }
+
         user.setEnabled(true);
         user.setRole("USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
