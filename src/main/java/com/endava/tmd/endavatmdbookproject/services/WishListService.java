@@ -51,4 +51,8 @@ public class WishListService {
             return null;
         }
     }
+
+    public List<WishList> show(Long userid){
+        return wishListRepository.getWishListsByWishListID_UserUserid(userid);
+    }
 }

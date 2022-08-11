@@ -32,4 +32,9 @@ public class WishListController {
 
         return result;
     }
+
+    @RequestMapping(path = "/show", method = RequestMethod.GET)
+    public List<WishList> show(@RequestParam("userid") Long userid){
+        return wishListService.show(userid);
+    }
 }
