@@ -37,4 +37,9 @@ public class WishListController {
     public List<WishList> show(@RequestParam("userid") Long userid){
         return wishListService.show(userid);
     }
+
+    @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@RequestParam("userid") Long userid, @RequestParam("bookid") Long bookid){
+        return wishListService.delete(userid, bookid);
+    }
 }

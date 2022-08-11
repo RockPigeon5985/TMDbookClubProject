@@ -6,7 +6,10 @@ import com.endava.tmd.endavatmdbookproject.models.UserBookID;
 import com.endava.tmd.endavatmdbookproject.models.WishList;
 import com.endava.tmd.endavatmdbookproject.repositories.WishListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -54,5 +57,14 @@ public class WishListService {
 
     public List<WishList> show(Long userid){
         return wishListRepository.getWishListsByWishListID_UserUserid(userid);
+    }
+
+    public ResponseEntity<?> delete(Long userid, Long bookid){
+        try {
+            wishListRepository.delete(wishListRepository.getWishListsByWishListID_UserUseridAndWishListID_BookId(userid, bookid));
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
