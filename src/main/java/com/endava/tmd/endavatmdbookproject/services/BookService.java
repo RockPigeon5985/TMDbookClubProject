@@ -43,4 +43,8 @@ public class BookService {
             return null;
         }
     }
+
+    public Book getBookById(Long id){
+        return bookRepository.getBookById(id);
+    }
 }

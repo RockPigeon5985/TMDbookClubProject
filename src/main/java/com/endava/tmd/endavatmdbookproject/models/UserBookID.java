@@ -3,7 +3,7 @@ package com.endava.tmd.endavatmdbookproject.models;
 import javax.persistence.*;
 import java.io.Serializable;
 @Embeddable
-public class BookListID implements Serializable {
+public class UserBookID implements Serializable {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
@@ -12,7 +12,7 @@ public class BookListID implements Serializable {
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book book;
 
-    public BookListID() {
+    public UserBookID() {
     }
 
     public User getUser() {

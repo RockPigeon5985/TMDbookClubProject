@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity(name = "book_list")
 public class BookList {
     @EmbeddedId
-    private BookListID bookListID;
+    private UserBookID bookListID;
     @OneToOne
     @JoinColumn(name = "rent_id")
     private RentList rentid;
@@ -13,11 +13,11 @@ public class BookList {
     public BookList() {
     }
 
-    public BookListID getBookListID() {
+    public UserBookID getBookListID() {
         return bookListID;
     }
 
-    public void setBookListID(BookListID bookListID) {
+    public void setBookListID(UserBookID bookListID) {
         this.bookListID = bookListID;
     }
 

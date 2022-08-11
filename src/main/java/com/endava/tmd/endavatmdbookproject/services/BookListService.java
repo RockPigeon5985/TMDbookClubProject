@@ -24,7 +24,7 @@ public class BookListService {
     //add a book in a user book list
     public BookList add(Long userid, Book book){
         BookList bookList = new BookList();
-        BookListID bookListID = new BookListID();
+        UserBookID bookListID = new UserBookID();
 
         User findUser = userService.getUserByUserid(userid);
 
