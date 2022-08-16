@@ -23,7 +23,7 @@ public class BookService {
 
     public List<Book> suggestBook(String s){
         String reg = "%" + s + "%";
-        System.out.println(bookRepository.suggestBook(reg));
+
         if(s.length() < 3)
             return null;
 
