@@ -4,6 +4,9 @@ import com.endava.tmd.endavatmdbookproject.models.Book;
 import com.endava.tmd.endavatmdbookproject.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
@@ -16,6 +19,15 @@ public class BookService {
     //get all books
     public List<Book> list(){
         return bookRepository.findAll();
+    }
+
+    public List<Book> suggestBook(String s){
+        String reg = "%" + s + "%";
+        System.out.println(bookRepository.suggestBook(reg));
+        if(s.length() < 3)
+            return null;
+
+        return bookRepository.suggestBook(reg);
     }
 
     //Used by other services

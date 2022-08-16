@@ -19,4 +19,8 @@ public class BookController {
         return bookService.list();
     }
 
+    @RequestMapping(path = "/suggest", method = RequestMethod.GET)
+    public List<Book> suggestBook(@RequestParam("s") String s){
+        return bookService.suggestBook(s);
+    }
 }
