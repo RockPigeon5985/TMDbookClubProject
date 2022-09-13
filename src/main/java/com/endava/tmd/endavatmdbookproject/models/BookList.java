@@ -2,7 +2,7 @@ package com.endava.tmd.endavatmdbookproject.models;
 
 import javax.persistence.*;
 
-@Entity(name = "book_list")
+@Entity(name = "book_lists")
 public class BookList {
     @EmbeddedId
     private UserBookID bookListID;

@@ -13,16 +13,18 @@ import java.util.List;
 
 @Service
 public class BookService {
+    public static final String PERCENT = "%";
     @Autowired
     private BookRepository bookRepository;
 
     //get all books
+
     public List<Book> list(){
         return bookRepository.findAll();
     }
 
     public List<Book> suggestBook(String s){
-        String reg = "%" + s + "%";
+        String reg = PERCENT + s + PERCENT;
 
         if(s.length() < 3)
             return null;

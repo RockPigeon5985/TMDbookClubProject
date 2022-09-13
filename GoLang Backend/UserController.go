@@ -1,7 +1,6 @@
 package Controllers
 
 import (
-	"GoLang_Backend/Database"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
@@ -22,17 +21,17 @@ type User struct {
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	var users []User
 
-	Database.DB.Find(&users)
+	DB.Find(&users)
 
 	json.NewEncoder(w).Encode(&users)
 }
 
-func GetUser(w http.ResponseWriter, r *http.Request) {
+func GetUserById(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	var user User
 
-	Database.db.First(&user, params["id"])
+	DB.First(&user, params["id"])
 
 	json.NewEncoder(w).Encode(user)
 }
@@ -42,11 +41,11 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(r.Body).Decode(&user)
 
-	createdUser := Database.db.Create(&user)
-	Database.err = createdUser.Error
+	createdUser := DB.Create(&user)
+	err := createdUser.Error
 
-	if Database.err != nil {
-		json.NewEncoder(w).Encode(Database.err)
+	if err != nil {
+		json.NewEncoder(w).Encode(err)
 	} else {
 		json.NewEncoder(w).Encode(&user)
 	}

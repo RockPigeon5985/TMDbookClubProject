@@ -1,7 +1,6 @@
-package Database
+package Controllers
 
 import (
-	"Controllers"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -11,7 +10,6 @@ import (
 )
 
 var DB *gorm.DB
-var err error
 
 func DBconnection() {
 	// Loading environment variables
@@ -41,10 +39,10 @@ func DBconnection() {
 	}
 
 	// Make migration to the database if they have not already been created
-	DB.AutoMigrate(&Controllers.User{})
-	DB.AutoMigrate(&Controllers.Book{})
-	DB.AutoMigrate(&Controllers.RentList{})
-	DB.AutoMigrate(&Controllers.BookList{})
-	DB.AutoMigrate(&Controllers.WaitList{})
-	DB.AutoMigrate(&Controllers.WishList{})
+	DB.AutoMigrate(&User{})
+	DB.AutoMigrate(&Book{})
+	DB.AutoMigrate(&RentList{})
+	/*DB.AutoMigrate(&BookList{})
+	DB.AutoMigrate(&WaitList{})
+	DB.AutoMigrate(&WishList{})*/
 }

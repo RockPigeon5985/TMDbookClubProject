@@ -3,7 +3,7 @@ package com.endava.tmd.endavatmdbookproject.models;
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity(name = "waiting_list")
+@Entity(name = "waiting_lists")
 public class WaitingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

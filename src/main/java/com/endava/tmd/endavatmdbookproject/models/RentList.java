@@ -3,7 +3,7 @@ package com.endava.tmd.endavatmdbookproject.models;
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity(name = "rent_list")
+@Entity(name = "rent_lists")
 public class RentList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

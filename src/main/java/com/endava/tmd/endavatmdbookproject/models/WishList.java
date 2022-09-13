@@ -3,7 +3,7 @@ package com.endava.tmd.endavatmdbookproject.models;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
-@Entity(name = "wish_list")
+@Entity(name = "wish_lists")
 public class WishList {
     @EmbeddedId
     private UserBookID wishListID;
