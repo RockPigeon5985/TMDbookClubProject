@@ -10,7 +10,7 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
     Book getBookByTitleAndAuthor(String title, String author);
     Book getBookByTitle(String title);
-    Book getBookById(Long id);
+    Book getBookByID(Long id);
     List<Book> getBooksByAuthor(String author);
     @Query(value = "SELECT * FROM books " +
             "WHERE title LIKE ?1 " +

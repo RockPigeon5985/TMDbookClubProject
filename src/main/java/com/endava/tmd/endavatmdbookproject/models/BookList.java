@@ -1,32 +1,22 @@
 package com.endava.tmd.endavatmdbookproject.models;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "book_lists")
 public class BookList {
     @EmbeddedId
     private UserBookID bookListID;
+
     @OneToOne
     @JoinColumn(name = "rent_id")
-    private RentList rentid;
-
-    public BookList() {
-    }
-
-    public UserBookID getBookListID() {
-        return bookListID;
-    }
-
-    public void setBookListID(UserBookID bookListID) {
-        this.bookListID = bookListID;
-    }
-
-    public RentList getRentid() {
-        return rentid;
-    }
-
-    public void setRentid(RentList rentid) {
-        this.rentid = rentid;
-    }
+    private RentList rent;
 }
 

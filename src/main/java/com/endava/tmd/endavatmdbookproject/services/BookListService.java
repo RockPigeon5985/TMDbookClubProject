@@ -44,14 +44,14 @@ public class BookListService {
         }
 
         bookList.setBookListID(bookListID);
-        bookList.setRentid(null);
+        bookList.setRent(null);
 
         return bookListRepository.saveAndFlush(bookList);
     }
 
     //get all books available for rent
     public List<Book> getBooksForRent(){
-        List<BookList> bookList = bookListRepository.getBookListByRentidIsNull();
+        List<BookList> bookList = bookListRepository.getBookListByRentIDIsNull();
 
         if(bookList.isEmpty()){
             return null;
@@ -77,12 +77,12 @@ public class BookListService {
 
     //update rent status
     public void updateRentid(BookList bookList, RentList rentid){
-        bookList.setRentid(rentid);
+        bookList.setRent(rentid);
         bookListRepository.saveAndFlush(bookList);
     }
 
     //get book if available for rent
     public BookList getBookAvailableForRent(String title, String author){
-        return bookListRepository.getBookListByBookListID_Book_TitleAndBookListID_Book_AuthorAndRentidIsNull(title, author);
+        return bookListRepository.getBookListByBookListID_Book_TitleAndBookListID_Book_AuthorAndRentIDIsNull(title, author);
     }
 }

@@ -22,10 +22,9 @@ public class WaitingListController {
     }
 
     //add user to waiting list
-    @RequestMapping(path = "/add",
-            method = RequestMethod.POST)
-    public Object add(@RequestParam("userid") Long userid, @RequestParam("rentid") Long rentid){
-        WaitingList result = waitingListService.add(userid, rentid);
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    public Object add(@RequestParam("userid") Long userid, @RequestParam("bookid") Long bookId){
+        WaitingList result = waitingListService.add(userid, bookId);
 
         if(result == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

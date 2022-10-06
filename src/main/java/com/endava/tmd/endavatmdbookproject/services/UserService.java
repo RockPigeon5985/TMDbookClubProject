@@ -25,7 +25,7 @@ public class UserService{
     //create an account
     public User create(User user){
         if(user.getPassword().equals("") || user.getEmail().equals("") ||
-                user.getFirst_name().equals("") || user.getLast_name().equals("")){
+                user.getFirstName().equals("") || user.getLastName().equals("")){
             return null;
         }
 
@@ -49,7 +49,7 @@ public class UserService{
 
     //get user by user id
     public User getUserByUserid(Long id){
-        return userRepository.getUserByUserid(id);
+        return userRepository.getUserByID(id);
     }
 
 }

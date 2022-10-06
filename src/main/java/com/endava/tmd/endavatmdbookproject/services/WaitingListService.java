@@ -1,5 +1,6 @@
 package com.endava.tmd.endavatmdbookproject.services;
 
+import com.endava.tmd.endavatmdbookproject.models.Book;
 import com.endava.tmd.endavatmdbookproject.models.RentList;
 import com.endava.tmd.endavatmdbookproject.models.User;
 import com.endava.tmd.endavatmdbookproject.models.WaitingList;
@@ -19,7 +20,7 @@ public class WaitingListService {
     private UserService userService;
 
     @Autowired
-    private RentListService rentListService;
+    private BookService bookService;
 
     //get all from waiting list
     public List<WaitingList> list(){
@@ -27,21 +28,21 @@ public class WaitingListService {
     }
 
     //add user to waiting list
-    public WaitingList add(Long userid, Long rentid){
+    public WaitingList add(Long userid, Long bookId){
         User user = userService.getUserByUserid(userid);
         if(user == null){
             return null;
         }
 
-        RentList rentList = rentListService.getRentListByRentid(rentid);
-        if(rentList == null){
+        Book book = bookService.getBookById(bookId);
+        if(book == null){
             return null;
         }
 
         WaitingList result = new WaitingList();
 
-        result.setUser_id(user);
-        result.setRent_id(rentList);
+        result.setUser(user);
+        result.setBook(book);
 
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);

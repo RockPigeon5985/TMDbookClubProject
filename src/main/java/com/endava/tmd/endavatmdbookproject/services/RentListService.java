@@ -65,7 +65,7 @@ public class RentListService {
 
     //extend renting period
     public RentList extendRent(Long rentid, Integer period) {
-        RentList rent = rentListRepository.getRentListByRentid(rentid);
+        RentList rent = rentListRepository.getRentListByID(rentid);
 
         if (rent == null) {
             return null;
@@ -84,7 +84,7 @@ public class RentListService {
             return null;
         }
 
-        return rentListRepository.getRentListsByUser_Userid(userid);
+        return rentListRepository.getRentListsByUser_ID(userid);
     }
 
     //Search by title or author to see if the book/books are available for rent or when they are available
@@ -108,14 +108,14 @@ public class RentListService {
         List<RentList> result = new ArrayList<>();
 
         for (Book b : books) {
-            result.add(getRentListByBook_Id(b.getId()));
+            result.add(getRentListByBook_Id(b.getID()));
         }
 
         return result;
     }
 
     public RentList getRentListByBook_Id(Long id) {
-        return rentListRepository.getRentListByBook_Id(id);
+        return rentListRepository.getRentListByBook_ID(id);
     }
 
     //verify who borrowed your books
@@ -123,13 +123,13 @@ public class RentListService {
         return rentListRepository
                 .getBorrowedBooks(userId)
                 .stream()
-                .map(t ->  getRentListByRentid(t))
+                .map(this::getRentListByRentid)
                 .collect(Collectors.toList());
     }
 
     //used by other services
 
     public RentList getRentListByRentid(Long rentid){
-        return rentListRepository.getRentListByRentid(rentid);
+        return rentListRepository.getRentListByID(rentid);
     }
 }

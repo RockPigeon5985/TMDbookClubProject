@@ -56,12 +56,12 @@ public class WishListService {
     }
 
     public List<WishList> show(Long userid){
-        return wishListRepository.getWishListsByWishListID_UserUserid(userid);
+        return wishListRepository.getWishListsByWishListID_UserID(userid);
     }
 
     public ResponseEntity<?> delete(Long userid, Long bookid){
         try {
-            wishListRepository.delete(wishListRepository.getWishListsByWishListID_UserUseridAndWishListID_BookId(userid, bookid));
+            wishListRepository.delete(wishListRepository.getWishListsByWishListID_UserIDAndWishListID_BookID(userid, bookid));
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

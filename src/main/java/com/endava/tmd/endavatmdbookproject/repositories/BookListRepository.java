@@ -9,10 +9,10 @@ import java.util.List;
 
 
 public interface BookListRepository extends JpaRepository<BookList, UserBookID> {
-    List<BookList> getBookListByRentidIsNull();
+    List<BookList> getBookListByRentIDIsNull();
     @Query(value = "SELECT book_list.* FROM book_list WHERE bookListID.book.title = ?1 AND bookListID.book.author = ?2 AND book_list.rentid IS NULL",
     nativeQuery = true)
     BookList getIfAvailable(String title, String author);
 
-    BookList getBookListByBookListID_Book_TitleAndBookListID_Book_AuthorAndRentidIsNull(String title, String author);
+    BookList getBookListByBookListID_Book_TitleAndBookListID_Book_AuthorAndRentIDIsNull(String title, String author);
 }

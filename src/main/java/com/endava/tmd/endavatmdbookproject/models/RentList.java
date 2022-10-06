@@ -1,14 +1,22 @@
 package com.endava.tmd.endavatmdbookproject.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Date;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "rent_lists")
 public class RentList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "rent_id")
-    private Long rentid;
+    private Long ID;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -23,47 +31,4 @@ public class RentList {
 
     @Column(nullable = false)
     private Date date_of_rent;
-
-    public RentList() {
-    }
-
-    public Long getRentid() {
-        return rentid;
-    }
-
-    public void setRentid(Long rentid) {
-        this.rentid = rentid;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public Date getDate_of_rent() {
-        return date_of_rent;
-    }
-
-    public void setDate_of_rent(Date date_of_rent) {
-        this.date_of_rent = date_of_rent;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
 }

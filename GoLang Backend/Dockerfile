@@ -1,8 +1,14 @@
-FROM golang:latest
+FROM golang:1.19
 
-RUN mkdir /build
-WORKDIR /build
+WORKDIR /app
 
-RUN export GO111MODULE=on
-RUN go get
+COPY go.mod ./
+COPY go.sum ./
 
+RUN go mod download
+
+COPY . .
+
+RUN go build -o /TMDbookClubGoLang
+
+CMD [ "/TMDbookClubGoLang" ]
